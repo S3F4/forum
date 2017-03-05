@@ -14,8 +14,51 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    @user = User.find_by_username(params[:id])
+    @data = []
+
+    if params[:sayfa]
+      render layout: "profile", locals: {page: params[:sayfa]}
+    else
+      render layout: "profile", locals: {page: params[:konular]}
+    end
+  end
+
+  def edit
+    @user = User.find_by_username(params[:id])
+    render layout: 'profile'
+  end
+
+  def update
+    @user = User.find_by_username(params[:id])
+
+    update_params = user_params
+
+    if update_params.has_key?(:password)
+      update_params.delete([:password, :password_confirmation])
+    end
+
+    if @user.update(update_params)
+      flash[:notice] = "Profil bilgileriniz başarıyla güncellendi"
+      redirect_to @user
+    else
+      render :edit, layout: 'profile'
+    end
+  end
+
   private
   def user_params
     params.require(:user).permit!
+  end
+
+  def destroy
+    @user = User.find_by_username(params[:id])
+    @user.destroy
+    redirect_to '/'
+  end
+
+  def select_user
+    @user = User.find_by_username(params[:id])
   end
 end

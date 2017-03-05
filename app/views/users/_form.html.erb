@@ -10,6 +10,10 @@
         </div>
     <% end %>
     <div class="row">
+      <div class="large-12 columns">
+        <%= form.label :username %>
+        <%= form.text_field :username %>
+      </div>
       <div class="large-6 columns">
         <%= form.label :first_name %>
         <%= form.text_field :first_name %>
@@ -22,16 +26,18 @@
         <%= form.label :email %>
         <%= form.text_field :email %>
       </div>
-      <div class="large-6 columns">
-        <%= form.label :password %>
-        <%= form.password_field :password %>
-      </div>
-      <div class="large-6 columns">
-        <%= form.label :password_confirmation %>
-        <%= form.password_field :password_confirmation %>
+      <% if params[:action] == 'new' %>
+          <div class="large-6 columns">
+            <%= form.label :password %>
+            <%= form.password_field :password %>
+          </div>
+          <div class="large-6 columns">
+            <%= form.label :password_confirmation %>
+            <%= form.password_field :password_confirmation %>
+      <%end %>
       </div>
       <div class="large-12 columns">
-        <%= form.submit "Sign Up", class: 'medium button right' %>
+        <%= form.submit class: 'medium button right' %>
       </div>
     </div>
 <% end %>
