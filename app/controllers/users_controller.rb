@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
 
+  before_action :select_user, only: [:show, :edit, :update, :destroy]
+  before_action :allowed?, only: [:edit, :create, :destroy]
+
   def new
     @user = User.new
   end
@@ -7,9 +10,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params.require(:user).permit!)
     if @user.save
+      login(@user)
       #flash[:notice] = "Aramıza Hoş Geldin"
       #redirect_to @user
-      redirect_to profile_path, notice: "Aramıza Hoşgeldin"
+      redirect_to profile_path(@user), notice: "Aramıza Hoşgeldin"
     else
       render :new
     end
@@ -17,12 +21,16 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by_username(params[:id])
-    @data = []
+    if @user
+      @data = []
 
-    if params[:sayfa]
-      render layout: "profile", locals: {page: params[:sayfa]}
+      if params[:sayfa]
+        render layout: "profile", locals: {page: params[:sayfa]}
+      else
+        render layout: "profile", locals: {page: "Konular"}
+      end
     else
-      render layout: "profile", locals: {page: "Konular"}
+      redirect_to "/"
     end
   end
 
@@ -49,18 +57,27 @@ class UsersController < ApplicationController
     end
   end
 
-  private
-  def user_params
-    params.require(:user).permit!
-  end
-
   def destroy
     @user = User.find_by_username(params[:id])
     @user.destroy
     redirect_to '/'
   end
 
-  #def select_user
-  # @user = User.find_by_username(params[:id])
-  #end
+  private
+  def user_params
+    params.require(:user).permit!
+  end
+
+
+  def select_user
+    @user = User.find_by_username(params[:id])
+  end
+
+  private
+  def allowed?
+    user = select_user
+    unless current_user == user
+      redirect_to profile_path(user), alert: "Bunu yapmaya yetkiniz yok"
+    end
+  end
 end

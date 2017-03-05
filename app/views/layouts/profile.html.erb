@@ -13,8 +13,10 @@
             <ul class="button-group radius">
               <li><%= link_to "Konular", user_path(@user, sayfa: 'konular'), class: 'small button secondary' %></li>
               <li><%= link_to "Yorumlar", user_path(@user, sayfa: 'yorumlar'), class: 'small button secondary' %></li>
-              <li><%= link_to "Profilimi Düzenle", edit_user_path(@user), class: 'small button secondary' %></li>
-              <li><%= link_to "Hesabımı Sil", @user, data: {confirm: "Hesabınızı silmek istediğinizden emin misiniz?"}, class: 'small button alert', method: :delete %></li>
+              <% if @user == current_user %>
+                  <li><%= link_to "Profilimi Düzenle", edit_user_path(@user), class: 'small button secondary' %></li>
+                  <li><%= link_to "Hesabımı Sil", @user, data: {confirm: "Hesabınızı silmek istediğinizden emin misiniz?"}, class: 'small button alert', method: :delete %></li>
+              <% end %>
             </ul>
           </div>
           <div class="large-12 columns">
