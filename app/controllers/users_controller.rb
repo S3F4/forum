@@ -7,8 +7,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params.require(:user).permit!)
     if @user.save
-      flash[:notice] = "Aramıza Hoş Geldin"
-      redirect_to @user
+      #flash[:notice] = "Aramıza Hoş Geldin"
+      #redirect_to @user
+      redirect_to profile_path, notice: "Aramıza Hoşgeldin"
     else
       render :new
     end
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
     if params[:sayfa]
       render layout: "profile", locals: {page: params[:sayfa]}
     else
-      render layout: "profile", locals: {page: params[:konular]}
+      render layout: "profile", locals: {page: "Konular"}
     end
   end
 
@@ -40,8 +41,9 @@ class UsersController < ApplicationController
     end
 
     if @user.update(update_params)
-      flash[:notice] = "Profil bilgileriniz başarıyla güncellendi"
-      redirect_to @user
+      #flash[:notice] = "Profil bilgileriniz başarıyla güncellendi"
+      redirect_to profile_path, notice: "Profil bilgileriniz başarıyla güncellendi"
+      #redirect_to @user
     else
       render :edit, layout: 'profile'
     end
@@ -58,7 +60,7 @@ class UsersController < ApplicationController
     redirect_to '/'
   end
 
-  def select_user
-    @user = User.find_by_username(params[:id])
-  end
+  #def select_user
+  # @user = User.find_by_username(params[:id])
+  #end
 end
