@@ -19,4 +19,8 @@ class User < ApplicationRecord
     hash_value = Digest::MD5.hexdigest(email.downcase)
     "http://www.gravatar.com/avatar/#{hash_value}?s=160"
   end
+
+  def oturum
+    
+  end
 end
