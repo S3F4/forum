@@ -13,4 +13,10 @@ class User < ApplicationRecord
   def to_param
     username
   end
+
+  #gravatar kullanımı
+  def avatar_url
+    hash_value = Digest::MD5.hexdigest(email.downcase)
+    "http://www.gravatar.com/avatar/#{hash_value}?s=160"
+  end
 end
