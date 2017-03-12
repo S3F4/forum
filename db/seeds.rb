@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+forums = ["ruby","python","java"]
+
+forums.each do |forum|
+  Frm.find_or_create_by(name: forum)
+  puts " - #{forum} forumu oluşturuldu"
+end
