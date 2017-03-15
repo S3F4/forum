@@ -14,7 +14,9 @@ Rails.application.routes.draw do
     resources :topics, only: [:new, :create], path: 'konular', path_names: {new: 'Yeni'}
   end
 
-  resources :topics, except: [:index, :new, :create], path: 'konular', path_names: {edit: 'duzenle'}
+  resources :topics, except: [:index, :new, :create], path: 'konular', path_names: {edit: 'duzenle'} do
+    resources :comments, only: [:new, :create], path: 'yorumlar', path_names: {new: 'yeni'}
+  end
 
   get ':id', to: 'users#show', as: :profile
   get ':id/edit', to: 'users#edit', as: :edit_profile
