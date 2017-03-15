@@ -10,6 +10,12 @@ Rails.application.routes.draw do
   get '/forumlar', to: 'frms#index', as: :forums
   get '/forumlar/:id', to: 'frms#show', as: :forum
 
+  resources :forums, only: [:index, :show], path: 'forumlar' do
+    resources :topics, only: [:new, :create], path: 'konular', path_names: {new: 'Yeni'}
+  end
+
+  resources :topics, except: [:index, :new, :create], path: 'konular', path_names: {edit: 'duzenle'}
+
   get ':id', to: 'users#show', as: :profile
   get ':id/edit', to: 'users#edit', as: :edit_profile
   get '/users/new', redirect('/kaydol')

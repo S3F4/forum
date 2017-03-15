@@ -2,5 +2,6 @@
     <div class="large-12 columns">
       <h1><%= @forum.name %> forumu</h1>
       <p>Foruma ait konular</p>
+      <%= link_to 'Konu Aç',new_forum_topic_path(@forum),class: 'tiny button right' %>
     </div>
 <% end %>
