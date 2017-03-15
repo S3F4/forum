@@ -1,7 +1,7 @@
 class TopicsController < ApplicationController
   #before_action :set_topic, only: [:show, :edit, :update, :destroy]
   before_action :validate_user!, except: [:show]
-  before_action only: [:edit,:update,:destroy] do
+  before_action only: [:edit, :update, :destroy] do
     validate_permission!(set_topic.user)
   end
   # GET /topics
@@ -13,6 +13,7 @@ class TopicsController < ApplicationController
   # GET /topics/1
   # GET /topics/1.json
   def show
+    @topic = Topic.find(params[:id])
   end
 
   # GET /topics/new
@@ -57,10 +58,7 @@ class TopicsController < ApplicationController
   # DELETE /topics/1.json
   def destroy
     @topic.destroy
-    respond_to do |format|
-      format.html { redirect_to topics_url, notice: 'Topic was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to root_url,notice: "konu başarıyla silindi"
   end
 
   private
@@ -71,6 +69,6 @@ class TopicsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def topic_params
-    params.require(:topic).permit(:forum_id,:title, :body)
+    params.require(:topic).permit(:forum_id, :title, :body)
   end
 end
