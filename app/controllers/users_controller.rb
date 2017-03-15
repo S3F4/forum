@@ -24,11 +24,21 @@ class UsersController < ApplicationController
     if @user
       @data = []
 
-      if params[:sayfa]
-        render layout: "profile", locals: {page: params[:sayfa]}
+      sayfa = params[:sayfa] || 'Konular'
+
+      if sayfa == 'Konular'
+        @data = @user.topics
       else
-        render layout: "profile", locals: {page: "Konular"}
+        @data = []
       end
+      #if params[:sayfa]
+      #  render layout: "profile", locals: {page: params[:sayfa]}
+      #else
+      #  render layout: "profile", locals: {page: "Konular"}
+      #end
+
+      render layout: "profile", locals: {page: sayfa}
+
     else
       redirect_to "/"
     end
