@@ -29,7 +29,7 @@ class UsersController < ApplicationController
       if sayfa == 'Konular'
         @data = @user.topics
       else
-        @data = []
+        @data = @user.comments
       end
       #if params[:sayfa]
       #  render layout: "profile", locals: {page: params[:sayfa]}

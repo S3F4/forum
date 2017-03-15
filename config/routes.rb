@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     resources :comments, only: [:new, :create], path: 'yorumlar', path_names: {new: 'yeni'}
   end
 
+  resources :comments, only: [:edit, :update, :destroy], path: 'yorumlar', path_names: {edit: 'düzenle'}
+
   get ':id', to: 'users#show', as: :profile
   get ':id/edit', to: 'users#edit', as: :edit_profile
   get '/users/new', redirect('/kaydol')

@@ -20,6 +20,7 @@
 </div>
 
 <div class="comments">
-  <h2>Yorumlar (#)</h2>
-  Yorumlar burada listelenecek
+  <h2>Yorumlar (<%= @topic.comments.count %>)</h2>
+  <%= render @topic.comments #_comment.html.erb render eder
+  %>
 </div>
